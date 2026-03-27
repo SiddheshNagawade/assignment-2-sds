@@ -1,0 +1,156 @@
+/* sidStyles*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    overflow: hidden;
+    transition: background 0.3s;
+}
+
+/* Navigation.Bar */
+.top-nav {
+    height: 60px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    font-weight: 800;
+    color: #ff5e00;
+    letter-spacing: 2px;
+}
+
+.top-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Layout*/
+.app-container {
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+.sidebar {
+    width: 200px;
+    background: #fff;
+    border-right: 2px solid #ddd;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    overflow-y: auto;
+}
+
+.tool-group, .settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tool-group span, .settings-group span {
+    font-size: 11px;
+    font-weight: bold;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.settings-group label {
+    font-size: 13px;
+    color: #555;
+}
+
+/*Buttons and Inputs */
+button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+button:hover {
+    border-color: #ff5e00;
+    background: #fff9f5;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+.primary {
+    background: #ff5e00;
+    color: #fff;
+    border: none;
+}
+
+.danger {
+    color: #e74c3c;
+}
+
+/*Canvas Section */
+.canvas-holder {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+canvas {
+    background: #fff;
+    cursor: crosshair;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+
+/* Dark Mode Theme*/
+.dark-mode {
+    background: #1a1a1a;
+}
+
+.dark-mode .top-nav {
+    background: #252525;
+    color: #fff;
+    border-color: #333;
+}
+
+.dark-mode .sidebar {
+    background: #252525;
+    border-color: #333;
+}
+
+.dark-mode button {
+    background: #333;
+    color: #eee;
+    border-color: #444;
+}
+
+.dark-mode .settings-group label, 
+.dark-mode .settings-group span {
+    color: #bbb;
+}
+
+/*Mobile Fixes*/
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}

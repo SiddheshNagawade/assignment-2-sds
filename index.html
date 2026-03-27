@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SiddheshDrawing App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="top-nav">
+        <div class="logo">DrawingLABs</div>
+        <div class="top-actions">
+            <button id="darkToggle">Mode</button>
+            <button id="clearAll" class="danger">Clear</button>
+            <button id="saveImg" class="primary">Export PNG</button>
+            <button id="addPic">Random Pic</button>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="tool-group">
+                <span>DRAW</span>
+                <button id="btn-brush">Brush</button>
+                <button id="btn-eraser">Eraser</button>
+            </div>
+
+            <div class="tool-group">
+                <span>SHAPES</span>
+                <button id="btn-rect">Square</button>
+                <button id="btn-circle">Circle</button>
+                <button id="btn-tri">Triangle</button>
+            </div>
+
+            <div class="settings-group">
+                <span>STYLE</span>
+                <label for="picker">Color</label>
+                <input type="color" id="picker" value="#ff5e00">
+                
+                <label for="widthSlider">Size</label>
+                <input type="range" id="widthSlider" min="1" max="50" value="8">
+
+                <label>Pixel Modifier: <span id="pixelValue">0</span></label>
+                <input type="range" id="pixelModifier" min="0" max="100" value="0">
+            </div>
+
+            <div class="settings-group">
+                <span>BACKGROUND</span>
+                <label>Pick Color</label>
+                <input type="color" id="bgPicker" value="#ffffff">
+                <button id="clearBg">No BG</button>
+            </div>
+        </div>
+
+        <div class="canvas-holder">
+            <canvas id="paintCanvas"></canvas>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
