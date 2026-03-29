@@ -22,6 +22,7 @@ let snapshot = null;
 let bgColor = "";
 let brushStyle = "round";
 let forceSquare = false;
+let pendingImage = null; //To store image until clicking
 
 // Function to save the drawing to local storage
 function saveCanvasState() {
@@ -73,11 +74,17 @@ function drawShape(x2, y2) {
 
 //Mouse Event Listeners
 
-canvas.addEventListener('mousedown', function (e) {
+function startDrawing(x, y, isShift) {
+    if (pendingImage) {
+        ctx.drawImage(pendingImage, x - 150, y - 150, 300, 300);
+        pendingImage = null;
+        saveCanvasState();
+        return;
+    }
     isDrawing = true;
-    startX = e.offsetX;
-    startY = e.offsetY;
-    forceSquare = e.shiftKey;
+    startX = x;
+    startY = y;
+    forceSquare = isShift;
     snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.lineWidth = document.getElementById('widthSlider').value;
@@ -85,34 +92,72 @@ canvas.addEventListener('mousedown', function (e) {
     ctx.strokeStyle = document.getElementById('picker').value;
     ctx.globalCompositeOperation = (currentTool === "eraser") ? "destination-out" : "source-over";
     ctx.moveTo(startX, startY);
-});
+}
 
-canvas.addEventListener('mousemove', function (e) {
+function moveDrawing(x, y, clientX, clientY) {
+    const eraserCursor = document.getElementById('eraser-cursor');
+    if (currentTool === "eraser") {
+        const size = document.getElementById('widthSlider').value;
+        eraserCursor.style.display = "block";
+        eraserCursor.style.width = size + "px";
+        eraserCursor.style.height = size + "px";
+        eraserCursor.style.left = (clientX - size / 2) + "px";
+        eraserCursor.style.top = (clientY - size / 2) + "px";
+        canvas.style.cursor = "none";
+    } else {
+        eraserCursor.style.display = "none";
+        canvas.style.cursor = "crosshair";
+    }
+
     if (!isDrawing) return;
     const modValue = Number(document.getElementById('pixelModifier').value);
     if (currentTool === "brush" || currentTool === "eraser") {
         var isEraser = (currentTool === "eraser");
         if (modValue < 50) {
-            drawPixel(e.offsetX, e.offsetY, isEraser);
+            drawPixel(x, y, isEraser);
         } else {
-            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.lineTo(x, y);
             ctx.stroke();
         }
     } else {
-        // For shapes, we restore the snapshot so we don't "smear" the shape
         ctx.globalCompositeOperation = "source-over";
         ctx.putImageData(snapshot, 0, 0);
-        drawShape(e.offsetX, e.offsetY);
+        drawShape(x, y);
     }
-});
+}
 
 function stopDrawing() {
     isDrawing = false;
     ctx.globalCompositeOperation = "source-over";
     saveCanvasState();
+    document.getElementById('eraser-cursor').style.display = "none";
 }
+
+//Event Listeners for Mouse
+canvas.addEventListener('mousedown', (e) => startDrawing(e.offsetX, e.offsetY, e.shiftKey));
+canvas.addEventListener('mousemove', (e) => moveDrawing(e.offsetX, e.offsetY, e.clientX, e.clientY));
 canvas.addEventListener('mouseup', stopDrawing);
 canvas.addEventListener('mouseleave', stopDrawing);
+
+//Event listeners for touch
+canvas.addEventListener('touchstart', (e) => {
+    const b = canvas.getBoundingClientRect();
+    const t = e.touches[0];
+    startDrawing(t.clientX - b.left, t.clientY - b.top, false);
+    e.preventDefault();
+}, { passive: false });
+
+canvas.addEventListener('touchmove', (e) => {
+    const b = canvas.getBoundingClientRect();
+    const t = e.touches[0];
+    moveDrawing(t.clientX - b.left, t.clientY - b.top, t.clientX, t.clientY);
+    e.preventDefault();
+}, { passive: false });
+
+canvas.addEventListener('touchend', (e) => {
+    stopDrawing();
+    e.preventDefault();
+}, { passive: false });
 
 //Toolbar Button
 function setActiveButton(id) {
@@ -173,8 +218,9 @@ function addRandomPic() {
     img.crossOrigin = 'anonymous';
     img.src = "https://picsum.photos/300?random=" + Math.random();
     img.onload = function () {
-        ctx.drawImage(img, (canvas.width - 300) / 2, (canvas.height - 300) / 2, 300, 300);
-        saveCanvasState();
+        //Instead of drawing now saving it for the next click
+        pendingImage = img;
+        console.log("Image ready! Click canvas to place.");
     };
 }
 document.getElementById('addPic').onclick = addRandomPic;
