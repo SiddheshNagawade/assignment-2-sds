@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>SiddheshDrawing App</title>
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
 
     <div class="top-nav">
@@ -21,42 +24,43 @@
         <div class="sidebar">
             <div class="tool-group">
                 <span>DRAW</span>
-                <button id="btn-brush">Brush</button>
-                <button id="btn-eraser">Eraser</button>
+                <button id="btn-brush" class="tool-btn active">Brush</button>
+                <button id="btn-eraser" class="tool-btn">Eraser</button>
             </div>
 
             <div class="tool-group">
                 <span>SHAPES</span>
-                <button id="btn-rect">Square</button>
-                <button id="btn-circle">Circle</button>
-                <button id="btn-tri">Triangle</button>
+                <button id="btn-rect" class="tool-btn">Square</button>
+                <button id="btn-circle" class="tool-btn">Circle</button>
+                <button id="btn-tri" class="tool-btn">Triangle</button>
             </div>
 
             <div class="settings-group">
                 <span>STYLE</span>
                 <label for="picker">Color</label>
                 <input type="color" id="picker" value="#ff5e00">
-                
+
                 <label for="widthSlider">Size</label>
                 <input type="range" id="widthSlider" min="1" max="50" value="8">
 
-                <label>Pixel Modifier: <span id="pixelValue">0</span></label>
+                <label>Pixel: <span id="pixelValue">0</span></label>
                 <input type="range" id="pixelModifier" min="0" max="100" value="0">
             </div>
 
             <div class="settings-group">
-                <span>BACKGROUND</span>
-                <label>Pick Color</label>
+                <span>BG</span>
+                <label>Pick</label>
                 <input type="color" id="bgPicker" value="#ffffff">
                 <button id="clearBg">No BG</button>
             </div>
         </div>
 
-        <div class="canvas-holder">
+        <div class="canvas-holder" id="canvasHolder">
             <canvas id="paintCanvas"></canvas>
         </div>
     </div>
 
     <script src="app.js"></script>
 </body>
+
 </html>

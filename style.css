@@ -19,19 +19,19 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 15px;
     border-bottom: 1px solid #ddd;
 }
 
 .logo {
     font-weight: 800;
     color: #ff5e00;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 .top-actions {
     display: flex;
-    gap: 10px;
+    gap: 5px;
 }
 
 /* Layout*/
@@ -44,40 +44,36 @@ body {
     width: 200px;
     background: #fff;
     border-right: 2px solid #ddd;
-    padding: 20px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     overflow-y: auto;
 }
 
-.tool-group, .settings-group {
+.tool-group,
+.settings-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
-.tool-group span, .settings-group span {
-    font-size: 11px;
+.tool-group span,
+.settings-group span {
+    font-size: 10px;
     font-weight: bold;
     color: #888;
-    margin-bottom: 4px;
-}
-
-.settings-group label {
-    font-size: 13px;
-    color: #555;
 }
 
 /*Buttons and Inputs */
 button {
-    padding: 10px;
+    padding: 12px 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background: #fff;
     cursor: pointer;
     font-size: 14px;
-    transition: all 0.2s;
+    transition: 0.2s;
 }
 
 button:hover {
@@ -85,8 +81,11 @@ button:hover {
     background: #fff9f5;
 }
 
-button:active {
-    transform: scale(0.97);
+/* Active Highlight bolte*/
+button.active {
+    background: #ff5e00 !important;
+    color: #fff !important;
+    border-color: #ff5e00 !important;
 }
 
 .primary {
@@ -105,52 +104,54 @@ button:active {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    padding: 15px;
+    background: #e9ecef;
+    overflow: hidden;
 }
 
 canvas {
     background: #fff;
     cursor: crosshair;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /* Dark Mode Theme*/
 .dark-mode {
-    background: #1a1a1a;
+    background: #111;
 }
 
-.dark-mode .top-nav {
-    background: #252525;
-    color: #fff;
-    border-color: #333;
-}
-
+.dark-mode .top-nav,
 .dark-mode .sidebar {
     background: #252525;
+    color: #eee;
     border-color: #333;
 }
 
 .dark-mode button {
     background: #333;
-    color: #eee;
-    border-color: #444;
+    color: rgb(255, 255, 255);
 }
 
-.dark-mode .settings-group label, 
-.dark-mode .settings-group span {
-    color: #bbb;
-}
-
-/*Mobile Fixes*/
-@media (max-width: 768px) {
-    .app-container {
-        flex-direction: column;
-    }
+/* Mobile Settings Responsive */
+@media (max-width: 650px) {
     .sidebar {
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        flex-wrap: wrap;
+        width: 100px;
+        padding: 10px 5px;
+    }
+
+    .sidebar span,
+    .sidebar label {
+        font-size: 9px;
+    }
+
+    button {
+        padding: 15px 5px;
+        font-size: 11px;
+    }
+
+    .logo {
+        font-size: 14px;
     }
 }
